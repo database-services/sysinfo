@@ -4,7 +4,8 @@ from sysinfo_lib import camelCase
 
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
+    entry = {}
     ignoredLines = []
     if stdout:
         device = ''
@@ -13,9 +14,11 @@ def parser(stdout, stderr):
             kv = re.search(r'^(\w[^=]+)=(.*)$', line)
             if dev:
                 device = dev.group(1)
-                output[device] = {}
+                if entry:
+                    output.append(entry)
+                entry = {}
             elif kv:
-                output[device][camelCase(kv.group(1))] = kv.group(2)
+                entry[camelCase(kv.group(1))] = kv.group(2)
             else:
                 ignoredLines.append(line)
                 pass

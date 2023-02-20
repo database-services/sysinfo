@@ -18,7 +18,7 @@ def parser_stats(stdout, stderr):
     return {'output': output}
 
 def parser_disk(stdout, stderr):
-    output = {}
+    output = []
     sectionsNames = []
     sectionsMask = ''
     totalLength = 0
@@ -67,7 +67,7 @@ def parser_disk(stdout, stderr):
                     if ci < len(columnPaths):
                         entry[columnPaths[ci]] = cv
                 if 'disk' in entry:
-                    output[entry['disk']] = entry
+                    output.append(entry)
 
     return {'output': output}
 

@@ -9,7 +9,7 @@ except:
     pass
 
 def python_pip_packages():
-    output = {}
+    output = []
     for pkg in pkg_resources.working_set:
         package = {}
         for key in ['location', 'project_name', 'key', 'version', 'parsed_version', 'py_version', 'platform', 'precedence']:
@@ -17,7 +17,7 @@ def python_pip_packages():
                 package[key] = str(getattr(pkg, key))
 
         if 'key' in package:
-            output[package['key']] = package
+            output.append(package)
 
     return output
 

@@ -2,12 +2,13 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     if stdout:
         for line in stdout.splitlines():
+            entry = {}
             lineSplit = re.split(r'[\s\t]+', line)
             if lineSplit and len(lineSplit) > 5:
-                output[lineSplit[0]] = {
+                entry = {
                     'moduleName': lineSplit[0],
                     'moduleMemorySize': lineSplit[1],
                     'numInstancesLoaded': lineSplit[2],
@@ -15,6 +16,8 @@ def parser(stdout, stderr):
                     'state': lineSplit[4],
                     'kernelMemoryOffset': lineSplit[5]
                 }
+            if entry:
+                output.append(entry)
 
     return {'output': output}
 

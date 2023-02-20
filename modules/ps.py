@@ -2,7 +2,7 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     columnsNames = [
         'user',
         'ruser',
@@ -37,7 +37,7 @@ def parser(stdout, stderr):
                         entry['args'] += ' ' + val
 
             if 'pid' in entry:
-                output[entry['pid']] = entry
+                output.append(entry)
 
     return {'output': output}
 

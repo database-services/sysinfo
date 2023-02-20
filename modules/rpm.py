@@ -2,13 +2,15 @@
 from sysinfo_lib import parseCharDelimitedTable, tableToDict
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     columns = ['installtime', 'buildtime', 'name', 'version', 'release', 'arch', 'vendor', 'packager', 'distribution', 'disttag']
     if stdout:
         output = parseCharDelimitedTable(stdout, '|', columns)
         output = tableToDict(output, 'name')
-
-    return {'output': output}
+        outputa=[]
+        for k,v in output.items():
+            outputa.append(v)
+        return {'output': outputa}
 
 def register(main):
     main['rpm'] = {

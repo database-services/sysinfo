@@ -2,18 +2,21 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     pid = ''
     if stdout:
         for line in stdout.splitlines():
+            entry={}
             lineMatch = re.findall(r'(\S+):\s(\S+)', line)
             for kv in lineMatch:
                 if kv[0] == 'pid':
+                    if entry:
+                        output.append(entry)
                     pid = kv[1]
-                    output[pid] = {}
+                    entry = {}
 
                 if pid != '':
-                    output[pid][kv[0]] = kv[1]
+                    entry[kv[0]] = kv[1]
 
     return {'output': output}
 

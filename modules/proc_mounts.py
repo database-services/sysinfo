@@ -2,9 +2,10 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     if stdout:
         for line in stdout.splitlines():
+            entry = {}
             lineSplit = re.split(r'[\s\t]+', line)
             if lineSplit and len(lineSplit) > 4:
                 accessValues = {}
@@ -12,12 +13,14 @@ def parser(stdout, stderr):
                     accessSplit = re.split(r'=', access + '=')
                     accessValues[accessSplit[0]] = accessSplit[1]
 
-                output[lineSplit[1]] = {
+                entry = {
                     'device': lineSplit[0],
                     'mountPoint': lineSplit[1],
                     'type': lineSplit[2],
                     'access': accessValues
                 }
+            if entry:
+                output.append(entry)
     
     return {'output': output}
 

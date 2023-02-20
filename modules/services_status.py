@@ -5,22 +5,28 @@ from sysinfo_lib import parseTable, tableToDict
 def parser_services(stdout, stderr):
     output = parseTable(stdout)
     output = tableToDict(output, 'unit')
-    return {'output': output}
+    outputa=[]
+    for k,v in output.items():
+        outputa.append(v)
+    return {'output': outputa}
 
 def parser_services_params(stdout, stderr):
-    output = {}
+    output = []
+    entry = {}
     service = None
     if stdout:
         for line in stdout.splitlines():
             serviceSearch = re.search(r'^>>>\s*Service:\s*(.*)$', line)
             if serviceSearch:
                 service = serviceSearch.group(1).strip()
-                output[service] = {}
+                if entry:
+                    output.append(entry)
+                entry = {}
 
             if service:
                 keyValueSearch = re.search(r'^([^=]+)=(.*)$', line)
                 if keyValueSearch:
-                    output[service][keyValueSearch.group(1)] = keyValueSearch.group(2).strip()
+                    entry[keyValueSearch.group(1)] = keyValueSearch.group(2).strip()
 
     return {'output': output}
 

@@ -7,7 +7,10 @@ def parser(stdout, stderr):
         output = parseSpaceTable(stdout)
         output = tableToDict(output, 'name')
 
-    return {'output': output}
+    outputa=[]
+    for k,v in output.items():
+        outputa.append(v)
+    return {'output': outputa}
 
 def register(main):
     main['proc_partitions'] = {

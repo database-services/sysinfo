@@ -3,17 +3,17 @@ import re
 from sysinfo_lib import camelCase
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     if stdout:
         for block in re.split(r'\r\r|\n\n|\r\n\r\n', stdout):
-            sub = {}
+            entry = {}
             for line in block.splitlines():
                 values = re.search(r'([^\t]+)\s*:\s*(.*)$', line)
                 if values:
-                    sub[camelCase(values.group(1).strip())] = values.group(2).strip()
+                    entry[camelCase(values.group(1).strip())] = values.group(2).strip()
 
-            if 'name' in sub:
-                output[sub['name']] = sub
+            if 'name' in entry:
+                output.append(entry)
 
     return {'output': output}
 

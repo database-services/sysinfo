@@ -17,13 +17,14 @@ def parser(stdout, stderr):
         major:minor         major and minor number of the device separated by a colon
     """
 
-    output = {}
+    output = []
     if stdout:
         for line in stdout.splitlines():
+            entry  = {}
             values = re.search(r'^(\S+)\s+(.*)\s+(\S+):(\S+)', line)
             if values:
                 params = values.group(2).strip()
-                output[values.group(1)] = {
+                entry = {
                     'device': values.group(1),
                     'operations': {
                         'read': 'R' in params,
@@ -41,6 +42,9 @@ def parser(stdout, stderr):
                     'major': values.group(3),
                     'minor': values.group(4)
                 }
+
+            if entry:
+                output.append(entry)
 
     return {'output': output}
 

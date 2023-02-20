@@ -2,9 +2,10 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     if stdout:
         for line in stdout.splitlines():
+            entry = {}
             lineSplit = re.split(r'[\s\t]+', line)
             if lineSplit and len(lineSplit) > 5:
                 output[lineSplit[0]] = {
@@ -16,6 +17,8 @@ def parser(stdout, stderr):
                     'fileID': lineSplit[5],
                     'lockedRegion': lineSplit[6]
                 }
+            if entry:
+                output.append(entry)
 
     return {'output': output}
 

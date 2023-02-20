@@ -5,7 +5,10 @@ def parser(stdout, stderr):
     columnsNames = ['groupName', 'password', 'gid', 'groupList']
     output = parseCharDelimitedTable(stdout, ':', columnsNames)
     output = tableToDict(output, 'groupName')
-    return {'output': output}
+    outputa=[]
+    for k,v in output.items():
+        outputa.append(v)
+    return {'output': outputa}
 
 def register(main):
     main['etc_group'] = {

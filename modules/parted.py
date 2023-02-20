@@ -2,11 +2,13 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
+    entry = {}
     defaultUnit = None
     path = None
     if stdout:
         for line in stdout.splitlines():
+            entry = {}
             if line.strip() == '':
                 defaultUnit = None
                 path = None
@@ -19,7 +21,7 @@ def parser(stdout, stderr):
 
             if defaultUnit and re.search(r'^(\/[^:]+)', line):
                 path = lineSplit[0]
-                output[path] = {
+                entry = {
                     'path': lineSplit[0],
                     'defaultUnit': defaultUnit,
                     'end': lineSplit[1],
@@ -33,13 +35,15 @@ def parser(stdout, stderr):
                 }
 
             if path and re.search(r'^(\d+):', line):
-                output[path]['table'][lineSplit[0]] = {
+                entry['table'][lineSplit[0]] = {
                     'start': lineSplit[1],
                     'end': lineSplit[2],
                     'size': lineSplit[3],
                     'fileSystem': lineSplit[4],
                     'flags': lineSplit[5]
                 }
+            if entry:
+                output.append(entry)
 
     return {'output': output}
 

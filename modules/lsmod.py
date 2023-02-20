@@ -2,18 +2,23 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
+    entry = {}
     if stdout:
         for line in stdout.splitlines():
+            entry = {}
             lineMatch = re.search(r'^(^\S+)\s*(\d+)\s*(\d+)\s*(.*)$', line)
             if lineMatch:
-                output[lineMatch.group(1)] = {
+                entry = {
                     'module': lineMatch.group(1),
                     'size': lineMatch.group(2),
                     'usedNumber': lineMatch.group(3),
                     'usedBy': lineMatch.group(4)
                 }
     
+            if entry:
+                output.append(entry)
+
     return {'output': output}
 
 def register(main):

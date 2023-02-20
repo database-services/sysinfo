@@ -5,7 +5,10 @@ def parser(stdout, stderr):
     columnsNames = ['username', 'password', 'uid', 'gid', 'idInfo', 'homeDir', 'shell']
     output = parseCharDelimitedTable(stdout, ':', columnsNames)
     output = tableToDict(output, 'username')
-    return {'output': output}
+    outputa=[]
+    for k,v in output.items():
+        outputa.append(v)
+    return {'output': outputa}
 
 def register(main):
     main['etc_passwd'] = {

@@ -2,12 +2,13 @@
 import re
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     if stdout:
         for line in stdout.splitlines():
+            entry={}
             values = re.split(r'\s+', line)
             if len(values) > 5:
-                output[values[1]] = {
+                entry = {
                     'partition': values[0],
                     'mountPoint': values[1],
                     'fileSystem': values[2],
@@ -15,6 +16,8 @@ def parser(stdout, stderr):
                     'dump': values[4],
                     'fsckOrder': values[5]
                 }
+            if entry:
+                output.append(entry)
 
     return {'output': output}
 

@@ -3,7 +3,8 @@ import re
 from sysinfo_lib import camelCase
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
+    entry = {}
     if stdout:
         for line in stdout.splitlines():
             entry = {}
@@ -12,8 +13,8 @@ def parser(stdout, stderr):
                 for pair in kv:
                     entry[camelCase(pair[0])] = pair[1].strip()
 
-            if 'name' in entry:
-                output[entry['name']] = entry
+            if entry:
+                output.append(entry)
 
     return {'output': output}
 

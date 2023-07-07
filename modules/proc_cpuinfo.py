@@ -4,9 +4,9 @@ from sysinfo_lib import camelCase
 
 def parser(stdout, stderr):
     output = {
-        'processor': {},
-        'hardware': {},
-        'oth': {}
+        'processor': [],
+        'hardware': [],
+        'oth':[] 
         }
 
     if stdout:
@@ -18,13 +18,13 @@ def parser(stdout, stderr):
                     sub[camelCase(values.group(1).strip())] = values.group(2).strip()
 
             if 'processor' in sub:
-                output['processor'][sub['processor']] = sub
+                output['processor'].append(sub)
 
             elif 'hardware' in sub:
-                output['hardware'] = sub
-
+                output['hardware'].append(sub)
             else:
-                output['oth'] = sub
+                if sub:
+                    output['oth'].append(sub)
 
     return {'output': output}
 

@@ -66,7 +66,8 @@ def parseElements(elements):
     return output
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
+    entry = {}
     pid = None
     if stdout:
         for line in re.split(r'\x00\n', stdout):
@@ -80,14 +81,20 @@ def parser(stdout, stderr):
                 ident = first[0:1]
                 content = first[1:]
                 if ident == 'p':
+                    entry={}
                     pid = content
-                    output[pid] = parseElements(elements)
-                    output[pid]['pid'] = pid
-                    output[pid]['files'] = []
+                    entry = parseElements(elements)
+                    entry['pid'] = pid
+                    entry['files'] = []
 
                 if pid and ident == 'f':
-                    output[pid]['files'].append(parseElements(elements))
-
+                    try:
+                        entry['files'].append(parseElements(elements))
+                    except Exception as e:
+                        pass 
+            if entry:
+                output.append(entry)
+             
     return {'output': output}
 
 def register(main):

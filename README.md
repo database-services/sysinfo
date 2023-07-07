@@ -36,6 +36,14 @@ optional arguments:
 ```
 ## Examples
 
+### Custom JSON output
+```
+python3 ./sysinfo.py -o hostinfo.json blkid df env etc_default etc_fstab etc_mtab etc_passwd etc_release etc_timezone findmnt free getconf groups hostnamectl ifconfi
+g kernel_name kernel_release kernel_version lsblk lscpu lsmod lsns lsof lspci machine modinfo nodename operating_system parted proc_cpuinfo proc_crypto proc_diskstats proc_loadavg proc_meminfo proc_modules proc_mounts proc_partitions proc_s
+waps proc_uptime proc_version proc_vmstat processor prtstat os python_pip_packages python_platform rpm services services_list sysctl sysctl_system timedatectl users vmstat_disk vmstat_disk_sum vmstat_forks vmstat_stats yum_installed yum_rep
+olist
+```
+
 ### Standart JSON output
 ```
 python2 sysinfo.py lscpu

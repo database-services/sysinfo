@@ -3,7 +3,7 @@ import re
 from sysinfo_lib import camelCase
 
 def parser(stdout, stderr):
-    output = {}
+    output = []
     columnNames = [
         'majorNumber',
         'minorNumber',
@@ -29,10 +29,11 @@ def parser(stdout, stderr):
             if not columns:
                 continue
 
-            output[columns[2]] = {}
+            entry = {}
             for num, val in enumerate(columns, start=0):
                 if num < lenColumnNames:
-                    output[columns[2]][columnNames[num]] = val
+                    entry[columnNames[num]] = val
+            output.append(entry)
 
     return {'output': output}
 
